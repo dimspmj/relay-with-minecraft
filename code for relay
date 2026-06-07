@@ -1,0 +1,26 @@
+import time
+import os
+import serial
+
+PORT = 'port arduino terpasang'
+LOG = r"(direktori game minecraft)"
+
+arduino = serial.Serial(PORT, 9600, timeout=.1)
+print(f"Terhubung ke {PORT}")
+
+with open(LOG, "r", encoding="utf-8", errors="ignore") as f:
+    f.seek(0, os.SEEK_END)
+    print("Menunggu lever...\n")
+    
+    while True:
+        line = f.readline()
+        if not line:
+            time.sleep(0.1)
+            continue
+        
+        if "LED ON" in line:
+            print("Lever ON")
+            arduino.write(b'1')
+        elif "LED OFF" in line:
+            print("Lever OFF")
+            arduino.write(b'0')
