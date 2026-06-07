@@ -1,0 +1,15 @@
+const int pinRelay = 3;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(pinRelay, OUTPUT);
+  digitalWrite(pinRelay, LOW);
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    char data = Serial.read();
+    if (data == '1') digitalWrite(pinRelay, HIGH);
+    else if (data == '0') digitalWrite(pinRelay, LOW);
+  }
+}
